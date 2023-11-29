@@ -4,6 +4,21 @@ struct Goat {
     pub is_grumpy: bool,
 }
 
+impl Goat {
+    fn log(&self) {
+        let grumpy_label = if self.is_grumpy {
+            "is grumpy"
+        } else {
+            "is super happy"
+        };
+
+        println!(
+            "{0} has a power level of {1}, and {grumpy_label}.",
+            self.name, self.power_level
+        )
+    }
+}
+
 /// Prints a number of goats.
 fn main() {
     let mut goat_count: u8 = 5;
@@ -24,19 +39,6 @@ fn main() {
         is_grumpy: false,
     };
 
-    log_goat(&gruf);
-    log_goat(&fawn);
-}
-
-fn log_goat(goat: &Goat) {
-    let grumpy_label = if goat.is_grumpy {
-        "is grumpy"
-    } else {
-        "is super happy"
-    };
-
-    println!(
-        "{0} has a power level of {1}, and {grumpy_label}.",
-        goat.name, goat.power_level
-    )
+    gruf.log();
+    fawn.log();
 }
