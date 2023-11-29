@@ -33,29 +33,30 @@ fn main() {
     // Math is done...
     println!("We have {goat_count} goats!");
 
-    let gruf = Goat {
-        name: "Gruf".to_string(),
-        power_level: 999,
-        is_grumpy: true,
-    };
-    let fawn = Goat {
-        name: "Fawn".to_string(),
-        power_level: 2,
-        is_grumpy: false,
-    };
-    let billy = Goat {
-        name: "Billy".to_string(),
-        power_level: 32,
-        is_grumpy: true,
-    };
-    let george = Goat {
-        name: "George".to_string(),
-        power_level: 117,
-        is_grumpy: false,
-    };
+    let goats = [
+        Goat {
+            name: "Gruf".to_string(),
+            power_level: 999,
+            is_grumpy: true,
+        },
+        Goat {
+            name: "Fawn".to_string(),
+            power_level: 2,
+            is_grumpy: false,
+        },
+        Goat {
+            name: "Billy".to_string(),
+            power_level: 32,
+            is_grumpy: true,
+        },
+        Goat {
+            name: "George".to_string(),
+            power_level: 117,
+            is_grumpy: false,
+        },
+    ];
 
-    gruf.log();
-    fawn.log();
-    billy.log();
-    george.log();
+    for goat in goats {
+        goat.log();
+    }
 }
