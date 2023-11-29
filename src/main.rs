@@ -11,9 +11,13 @@ impl Goat {
         } else {
             "is super happy"
         };
-
+        let power_label = match self.power_level {
+            0..=10 => "not very powerful",
+            100.. => "SUPER powerful",
+            _ => "powerful enough",
+        };
         println!(
-            "{0} has a power level of {1}, and {grumpy_label}.",
+            "{0} has a power level of {1}, which is {power_label}, and {grumpy_label}.",
             self.name, self.power_level
         )
     }
@@ -29,16 +33,21 @@ fn main() {
 
     let gruf = Goat {
         name: "Gruf".to_string(),
-        power_level: 72,
+        power_level: 999,
         is_grumpy: true,
     };
-
     let fawn = Goat {
         name: "Fawn".to_string(),
         power_level: 2,
         is_grumpy: false,
     };
+    let billy = Goat {
+        name: "Billy".to_string(),
+        power_level: 32,
+        is_grumpy: true,
+    };
 
     gruf.log();
     fawn.log();
+    billy.log();
 }
