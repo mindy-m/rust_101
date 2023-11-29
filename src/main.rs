@@ -15,10 +15,21 @@ fn main() {
     let gruf = Goat {
         name: "Gruf".to_string(),
         power_level: 72,
+        is_grumpy: true,
+    };
+
+    let fawn = Goat {
+        name: "Fawn".to_string(),
+        power_level: 2,
         is_grumpy: false,
     };
 
-    let grumpy_label = if gruf.is_grumpy {
+    log_goat(&gruf);
+    log_goat(&fawn);
+}
+
+fn log_goat(goat: &Goat) {
+    let grumpy_label = if goat.is_grumpy {
         "is grumpy"
     } else {
         "is super happy"
@@ -26,6 +37,6 @@ fn main() {
 
     println!(
         "{0} has a power level of {1}, and {grumpy_label}.",
-        gruf.name, gruf.power_level
+        goat.name, goat.power_level
     )
 }
