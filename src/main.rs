@@ -13,8 +13,10 @@ impl Goat {
         };
         let power_label = match self.power_level {
             0..=10 => "not very powerful",
-            100.. => "SUPER powerful",
-            _ => "powerful enough",
+            11..=99 => "pretty powerful",
+            100..=199 => "SUPER powerful",
+            200.. => "EXTREEEMELY powerful",
+            // for edge cases _ => "this other option",
         };
         println!(
             "{0} has a power level of {1}, which is {power_label}, and {grumpy_label}.",
@@ -46,8 +48,14 @@ fn main() {
         power_level: 32,
         is_grumpy: true,
     };
+    let george = Goat {
+        name: "George".to_string(),
+        power_level: 117,
+        is_grumpy: false,
+    };
 
     gruf.log();
     fawn.log();
     billy.log();
+    george.log();
 }
