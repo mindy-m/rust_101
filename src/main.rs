@@ -1,3 +1,5 @@
+use std::io;
+
 struct Goat {
     pub name: String,
     pub power_level: u16,
@@ -16,7 +18,7 @@ impl Goat {
             11..=99 => "pretty powerful",
             100..=199 => "SUPER powerful",
             200.. => "EXTREEEMELY powerful",
-            // for edge cases _ => "this other option",
+            // for edge cases _ => "this other option",G
         };
         println!(
             "{0} has a power level of {1}, which is {power_label}, and {grumpy_label}.",
@@ -57,6 +59,21 @@ fn main() {
     ];
 
     for goat in goats {
-        goat.log();
+        if !goat.is_grumpy {
+            goat.log();
+        }
     }
+
+    // Takes a user-supplied name, then tells them it's great.  Is it?  Who knows...
+    println!("Please name a goat.");
+
+    let mut supplied_name = String::new();
+
+    io::stdin()
+        .read_line(&mut supplied_name)
+        .expect("I didn't get that.");
+
+    // Prevents "enter" for goat name from making the output appearing on more than one line
+    let trimmed_name = supplied_name.trim();
+    println!("{trimmed_name} is a great name for a goat!");
 }
