@@ -57,6 +57,7 @@ fn main() {
             is_grumpy: false,
         },
     ];
+    // TODO:  Convert this array of goats to a Hash map of Strings and goats so the input reader can look a goat up by name.
 
     for goat in goats {
         if !goat.is_grumpy {
