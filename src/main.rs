@@ -1,4 +1,4 @@
-use std::io;
+use std::{collections::HashMap, io};
 
 struct Goat {
     pub name: String,
@@ -7,6 +7,7 @@ struct Goat {
 }
 
 impl Goat {
+    /// Logs the most important facts about a goat.
     fn log(&self) {
         let grumpy_label = if self.is_grumpy {
             "is grumpy"
@@ -58,23 +59,70 @@ fn main() {
         },
     ];
     // TODO:  Convert this array of goats to a Hash map of Strings and goats so the input reader can look a goat up by name.
+    let goat_map = HashMap::from([
+        (
+            "gruf",
+            Goat {
+                name: "Gruf".to_string(),
+                power_level: 999,
+                is_grumpy: true,
+            },
+        ),
+        (
+            "fawn",
+            Goat {
+                name: "Fawn".to_string(),
+                power_level: 2,
+                is_grumpy: false,
+            },
+        ),
+        (
+            "billy",
+            Goat {
+                name: "Billy".to_string(),
+                power_level: 32,
+                is_grumpy: true,
+            },
+        ),
+        (
+            "george",
+            Goat {
+                name: "George".to_string(),
+                power_level: 117,
+                is_grumpy: false,
+            },
+        ),
+    ]);
 
-    for goat in goats {
-        if !goat.is_grumpy {
-            goat.log();
-        }
-    }
+    // for goat in goats {
+    //     if !goat.is_grumpy {
+    //         goat.log();
+    //     }
+    // }
 
     // Takes a user-supplied name, then tells them it's great.  Is it?  Who knows...
-    println!("Please name a goat.");
-
     let mut supplied_name = String::new();
+    loop {
+        println!("\nPlease name a goat.");
 
-    io::stdin()
-        .read_line(&mut supplied_name)
-        .expect("I didn't get that.");
+        io::stdin()
+            .read_line(&mut supplied_name)
+            .expect("I didn't get that.");
 
-    // Prevents "enter" for goat name from making the output appearing on more than one line
-    let trimmed_name = supplied_name.trim();
-    println!("{trimmed_name} is a great name for a goat!");
+        // Prevents "enter" for goat name from making the output appearing on more than one line
+        let trimmed_name = supplied_name.trim();
+        println!("{trimmed_name} is a great name for a goat!");
+        let lowercased_goat_name = trimmed_name.to_lowercase();
+        let goat_lookup_result = goat_map.get(lowercased_goat_name.as_str());
+        match goat_lookup_result {
+            Some(goat) => {
+                println!("We know a goat named {trimmed_name}!");
+                goat.log();
+            }
+            None => {
+                println!("We don't know a goat by that name.");
+            }
+        }
+        supplied_name.clear();
+    }
 }
