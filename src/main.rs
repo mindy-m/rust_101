@@ -71,16 +71,12 @@ fn main() {
         ),
     ]);
 
-    // for goat in goats {
-    //     if !goat.is_grumpy {
-    //         goat.log();
-    //     }
-    // }
     loop {
         println!("\nChoose an option: \n");
         println!("\t1: What time is it?");
-        println!("\t2: Look at goats!!");
-        println!("\t3: Be a quitter.");
+        println!("\t2: Look at one goat.");
+        println!("\t3: Log all goats!");
+        println!("\t4: Be a quitter.");
 
         let mut menu_choice = String::new();
         let read_result = io::stdin().read_line(&mut menu_choice);
@@ -93,12 +89,27 @@ fn main() {
         }
 
         match menu_choice.as_str() {
-            "1" => println!("Good choice!  I don't know what the time is."),
+            "1" => println!("\nGood choice!  I don't know what the time is."),
             "2" => goat_branch(&mut goat_map),
-            "3" => break,
+            "3" => log_all_goats(&goat_map),
+            "4" => break,
             _ => println!("Invalid choice.  Pick a number 1-3."),
         }
     }
+}
+
+fn log_all_goats(goat_map: &HashMap<String, Goat>) {
+    println!("\nLogging all goats!!\n");
+
+    // More syntax sugar w/ destructuring - just look at 2nd thing
+    for (_, goat) in goat_map {
+        goat.log();
+    }
+    // Another way of doing this:
+    // for string_goat_tuple in goat_map {
+    //     let goat = string_goat_tuple.1;
+    //     goat.log();
+    // }
 }
 
 fn goat_branch(goat_map: &mut HashMap<String, Goat>) {
@@ -154,7 +165,7 @@ fn record_goat(
         power_level: get_power_level(),
         is_grumpy: get_is_grumpy(),
     };
-    println!("\nThis is a good goat!  I will add it to the database.");
+    println!("\nThis is a good goat!  I will add it to the database.\n\nNew goat entry: ");
     new_goat.log();
     goat_map.insert(lowercased_goat_name, new_goat);
 }
