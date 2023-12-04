@@ -1,4 +1,3 @@
-use core::num;
 use std::{collections::HashMap, io};
 
 struct Goat {
@@ -77,39 +76,66 @@ fn main() {
     //         goat.log();
     //     }
     // }
+    loop {
+        goat_branch(&mut goat_map);
+    }
+}
 
+fn goat_branch(goat_map: &mut HashMap<String, Goat>) {
+    let trimmed_name = get_goat_name();
     // Takes a user-supplied name, then tells them it's great.  Is it?  Who knows...
+    println!("\n{trimmed_name} is a great name for a goat!");
+    let lowercased_goat_name = trimmed_name.to_lowercase();
+    let goat_lookup_result = goat_map.get(lowercased_goat_name.as_str());
+    match goat_lookup_result {
+        Some(goat) => {
+            println!("We know a goat named {trimmed_name}!");
+            goat.log();
+        }
+        None => {
+            println!("We don't know a goat by that name.");
+            record_goat(trimmed_name, goat_map, lowercased_goat_name);
+        }
+    }
+}
 
+fn get_goat_name() -> String {
+    let mut trimmed_name = String::new();
+
+    // Prevents "enter" from the input from making the output appearing on more than one line
     loop {
         println!("\nPlease name a goat.");
         let mut input_text_butter = String::new();
-        io::stdin()
-            .read_line(&mut input_text_butter)
-            .expect("I didn't get that.");
+        let read_result = io::stdin().read_line(&mut input_text_butter);
 
-        // Prevents "enter" for goat name from making the output appearing on more than one line
-        let trimmed_name: String = input_text_butter.trim().chars().collect();
-        println!("{trimmed_name} is a great name for a goat!");
-        let lowercased_goat_name = trimmed_name.to_lowercase();
-        let goat_lookup_result = goat_map.get(lowercased_goat_name.as_str());
-        match goat_lookup_result {
-            Some(goat) => {
-                println!("We know a goat named {trimmed_name}!");
-                goat.log();
+        match read_result {
+            Ok(_) => {
+                trimmed_name = input_text_butter.trim().chars().collect();
             }
-            None => {
-                println!("We don't know a goat by that name.");
-                let new_goat = Goat {
-                    name: trimmed_name,
-                    power_level: get_power_level(),
-                    is_grumpy: get_is_grumpy(),
-                };
-                println!("This is a good goat!  I will add it to the database.");
-                new_goat.log();
-                goat_map.insert(lowercased_goat_name, new_goat);
-            }
+            Err(_) => (),
+        }
+        if trimmed_name == "" {
+            println!("I didn't get that.");
+        } else {
+            break;
         }
     }
+    trimmed_name
+}
+
+fn record_goat(
+    trimmed_name: String,
+    goat_map: &mut HashMap<String, Goat>,
+    lowercased_goat_name: String,
+) {
+    let new_goat = Goat {
+        name: trimmed_name,
+        power_level: get_power_level(),
+        is_grumpy: get_is_grumpy(),
+    };
+    println!("This is a good goat!  I will add it to the database.");
+    new_goat.log();
+    goat_map.insert(lowercased_goat_name, new_goat);
 }
 
 fn get_is_grumpy() -> bool {
