@@ -77,23 +77,44 @@ fn main() {
     //     }
     // }
     loop {
-        goat_branch(&mut goat_map);
+        println!("\nChoose an option: \n");
+        println!("\t1: What time is it?");
+        println!("\t2: Look at goats!!");
+        println!("\t3: Be a quitter.");
+
+        let mut menu_choice = String::new();
+        let read_result = io::stdin().read_line(&mut menu_choice);
+
+        match read_result {
+            Ok(_) => {
+                menu_choice = menu_choice.trim().chars().collect();
+            }
+            Err(_) => (),
+        }
+
+        match menu_choice.as_str() {
+            "1" => println!("Good choice!  I don't know what the time is."),
+            "2" => goat_branch(&mut goat_map),
+            "3" => break,
+            _ => println!("Invalid choice.  Pick a number 1-3."),
+        }
     }
 }
 
 fn goat_branch(goat_map: &mut HashMap<String, Goat>) {
     let trimmed_name = get_goat_name();
     // Takes a user-supplied name, then tells them it's great.  Is it?  Who knows...
-    println!("\n{trimmed_name} is a great name for a goat!");
+
     let lowercased_goat_name = trimmed_name.to_lowercase();
     let goat_lookup_result = goat_map.get(lowercased_goat_name.as_str());
     match goat_lookup_result {
         Some(goat) => {
-            println!("We know a goat named {trimmed_name}!");
+            println!("\nWe know a goat named {trimmed_name}!");
             goat.log();
         }
         None => {
-            println!("We don't know a goat by that name.");
+            println!("\nWe don't know a goat by that name.");
+            println!("{trimmed_name} is a great name for a goat!");
             record_goat(trimmed_name, goat_map, lowercased_goat_name);
         }
     }
@@ -133,7 +154,7 @@ fn record_goat(
         power_level: get_power_level(),
         is_grumpy: get_is_grumpy(),
     };
-    println!("This is a good goat!  I will add it to the database.");
+    println!("\nThis is a good goat!  I will add it to the database.");
     new_goat.log();
     goat_map.insert(lowercased_goat_name, new_goat);
 }
