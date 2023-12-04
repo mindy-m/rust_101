@@ -1,3 +1,4 @@
+use chrono::prelude::*;
 use std::{collections::HashMap, io};
 
 struct Goat {
@@ -28,13 +29,11 @@ impl Goat {
     }
 }
 
-/// Prints a number of goats.
 fn main() {
-    let mut goat_count: u8 = 5;
-    goat_count += 7;
-
-    // Math is done...
-    println!("We have {goat_count} goats!");
+    // Prints a number of goats.
+    // let mut goat_count: u8 = 5;
+    // goat_count += 7;
+    // println!("We have {goat_count} goats!");
 
     let mut goat_map = HashMap::from([
         (
@@ -89,7 +88,8 @@ fn main() {
         }
 
         match menu_choice.as_str() {
-            "1" => println!("\nGood choice!  I don't know what the time is."),
+            // Adding time, still needs to be formatted
+            "1" => println!("\nIt is currently {:?}", Local::now()),
             "2" => goat_branch(&mut goat_map),
             "3" => log_all_goats(&goat_map),
             "4" => break,
