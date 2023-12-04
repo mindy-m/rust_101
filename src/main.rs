@@ -118,8 +118,8 @@ fn main() {
 
                 let trimmed_grumpy = input_text_butter.trim().to_lowercase();
                 let is_grumpy = match trimmed_grumpy.as_str() {
-                    "y" | "yes" | "hell yeah" => true,
-                    "n" | "no" | "fuck nah" => false,
+                    "y" | "yes" | "hell yeah" | "true" => true,
+                    "n" | "no" | "fuck nah" | "false" => false,
                     _ => panic!("You are trippin'.  Supply a better answer."),
                 };
                 let new_goat = Goat {
