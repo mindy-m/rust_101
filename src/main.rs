@@ -1,3 +1,4 @@
+use core::num;
 use std::{collections::HashMap, io};
 
 struct Goat {
@@ -97,31 +98,52 @@ fn main() {
                 goat.log();
             }
             None => {
-                println!("We don't know a goat by that name.\nWhat is their power level?");
+                println!("We don't know a goat by that name.");
                 let name = trimmed_name;
-                input_text_butter.clear();
+                let power_level: u32;
 
-                io::stdin()
-                    .read_line(&mut input_text_butter)
-                    .expect("I didn't get that.");
+                loop {
+                    input_text_butter.clear();
+                    println!("What is their power level?");
 
-                let trimmed_power_level = input_text_butter.trim();
-                let power_level: u32 = trimmed_power_level
-                    .parse()
-                    .expect("I couldn't parse your bogus number.");
-                input_text_butter.clear();
+                    io::stdin()
+                        .read_line(&mut input_text_butter)
+                        .expect("I didn't get that.");
 
-                println!("Is the goat grumpy?!?");
-                io::stdin()
-                    .read_line(&mut input_text_butter)
-                    .expect("Something made this grumpy.");
+                    let trimmed_power_level = input_text_butter.trim();
 
-                let trimmed_grumpy = input_text_butter.trim().to_lowercase();
-                let is_grumpy = match trimmed_grumpy.as_str() {
-                    "y" | "yes" | "hell yeah" | "true" => true,
-                    "n" | "no" | "fuck nah" | "false" => false,
-                    _ => panic!("You are trippin'.  Supply a better answer."),
-                };
+                    // Please enjoy the turbo fish.
+                    let number_parse_status = trimmed_power_level.parse::<u32>();
+                    match number_parse_status {
+                        Ok(x) => {
+                            power_level = x;
+                            break;
+                        }
+                        Err(_) => println!("I couldn't parse your bogus number."),
+                    }
+                }
+
+                let is_grumpy: bool;
+                loop {
+                    input_text_butter.clear();
+                    println!("Is the goat grumpy?!?");
+                    io::stdin()
+                        .read_line(&mut input_text_butter)
+                        .expect("Something made this grumpy.");
+
+                    let trimmed_grumpy = input_text_butter.trim().to_lowercase();
+                    match trimmed_grumpy.as_str() {
+                        "y" | "yes" | "hell yeah" | "true" => {
+                            is_grumpy = true;
+                            break;
+                        }
+                        "n" | "no" | "fuck nah" | "false" => {
+                            is_grumpy = false;
+                            break;
+                        }
+                        _ => println!("You are trippin'.  Supply a better answer (think yes/no.)"),
+                    };
+                }
                 let new_goat = Goat {
                     name,
                     power_level,
