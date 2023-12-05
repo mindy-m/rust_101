@@ -20,7 +20,7 @@ impl Goat {
             11..=99 => "pretty powerful",
             100..=199 => "SUPER powerful",
             200.. => "EXTREEEMELY powerful",
-            // for edge cases _ => "this other option",G
+            // for edge cases _ => "this other option",
         };
         println!(
             "{0} has a power level of {1}, which is {power_label}, and {grumpy_label}.",
