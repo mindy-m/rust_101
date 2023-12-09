@@ -15,17 +15,22 @@ impl Goat {
         } else {
             "is super happy"
         };
-        let power_label = match self.power_level {
-            0..=10 => "not very powerful",
-            11..=99 => "pretty powerful",
-            100..=199 => "SUPER powerful",
-            200.. => "EXTREEEMELY powerful",
-            // for edge cases _ => "this other option",
-        };
+        let power_label = self.get_power_level_label();
         println!(
             "{0} has a power level of {1}, which is {power_label}, and {grumpy_label}.",
             self.name, self.power_level
         )
+    }
+
+    fn get_power_level_label(&self) -> &str {
+        match self.power_level {
+            0..=10 => "not very powerful",
+            11..=99 => "pretty powerful",
+            100..=199 => "SUPER powerful",
+            200..=299 => "super duper powerful",
+            300.. => "EXTREEEMELY powerful",
+            // for edge cases _ => "this other option",
+        }
     }
 }
 
@@ -220,4 +225,48 @@ fn get_power_level() -> u32 {
         }
     }
     power_level
+}
+
+#[cfg(test)]
+mod tests {
+    // Note this useful idiom: importing names from outer (for mod tests) scope.
+    use super::*;
+
+    #[test]
+    fn test_power_level_label() {
+        let mut test_goat = Goat {
+            name: "Gloria".to_string(),
+            power_level: 3,
+            is_grumpy: false,
+        };
+        assert_eq!(
+            test_goat.get_power_level_label(),
+            "not very powerful",
+            "3 case"
+        );
+        test_goat.power_level = 67;
+        assert_eq!(
+            test_goat.get_power_level_label(),
+            "pretty powerful",
+            "67 case"
+        );
+        test_goat.power_level = 144;
+        assert_eq!(
+            test_goat.get_power_level_label(),
+            "SUPER powerful",
+            "144 case"
+        );
+        test_goat.power_level = 287;
+        assert_eq!(
+            test_goat.get_power_level_label(),
+            "super duper powerful",
+            "287 case"
+        );
+        test_goat.power_level = 350;
+        assert_eq!(
+            test_goat.get_power_level_label(),
+            "EXTREEEMELY powerful",
+            "350 case"
+        );
+    }
 }
