@@ -83,23 +83,15 @@ fn main() {
     ];
 
     loop {
-        println!("\nChoose an option: \n");
-        println!("\t1: What time is it?");
-        println!("\t2: Look at one goat.");
-        println!("\t3: Log all goats!");
-        println!("\t4: List sloths.");
-        println!("\t5: Add sloths.");
-        println!("\t6: Be a quitter.");
-
-        let mut menu_choice = String::new();
-        let read_result = io::stdin().read_line(&mut menu_choice);
-
-        match read_result {
-            Ok(_) => {
-                menu_choice = menu_choice.trim().chars().collect();
-            }
-            Err(_) => (),
-        }
+        let menu = "\nChoose an option: \n\
+        \t1: What time is it?\n\
+        \t2: Look at one goat.\n\
+        \t3: Log all goats!\n\
+        \t4: List sloths.\n\
+        \t5: Add sloths.\n\
+        \t6: Be a quitter."
+            .to_string();
+        let menu_choice = get_string_from_stdin(menu);
 
         match menu_choice.as_str() {
             // Adding time, still needs to be formatted
@@ -175,6 +167,7 @@ fn get_string_from_stdin(message: String) -> String {
     // Prevents "enter" from the input from making the output appearing on more than one line
     loop {
         println!("\n{message}");
+        // Makes everything run smoother
         let mut input_text_butter = String::new();
         let read_result = io::stdin().read_line(&mut input_text_butter);
 
@@ -210,15 +203,9 @@ fn record_goat(
 
 fn get_is_grumpy() -> bool {
     let is_grumpy: bool;
-    let mut input_text_butter = String::new();
     loop {
-        input_text_butter.clear();
-        println!("Is the goat grumpy?!?");
-        io::stdin()
-            .read_line(&mut input_text_butter)
-            .expect("Something made this grumpy.");
-
-        let trimmed_grumpy = input_text_butter.trim().to_lowercase();
+        let trimmed_grumpy =
+            get_string_from_stdin("Is the goat grumpy?!?".to_string()).to_lowercase();
         match trimmed_grumpy.as_str() {
             "y" | "yes" | "hell yeah" | "true" => {
                 is_grumpy = true;
@@ -236,19 +223,11 @@ fn get_is_grumpy() -> bool {
 
 fn get_power_level() -> u32 {
     let power_level: u32;
-    let mut input_text_butter = String::new();
     loop {
-        input_text_butter.clear();
-        println!("What is their power level?");
-
-        io::stdin()
-            .read_line(&mut input_text_butter)
-            .expect("I didn't get that.");
-
-        let trimmed_power_level = input_text_butter.trim();
+        let power_level_string = get_string_from_stdin("What is their power level?".to_string());
 
         // Please enjoy the turbo fish.
-        let number_parse_status = trimmed_power_level.parse::<u32>();
+        let number_parse_status = power_level_string.trim().parse::<u32>();
         match number_parse_status {
             Ok(x) => {
                 power_level = x;
