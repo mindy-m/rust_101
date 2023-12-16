@@ -75,12 +75,21 @@ fn main() {
         ),
     ]);
 
+    let mut sloths: Vec<String> = vec![
+        "Slowy".to_string(),
+        "Roberto".to_string(),
+        "Speedy".to_string(),
+        "Paul".to_string(),
+    ];
+
     loop {
         println!("\nChoose an option: \n");
         println!("\t1: What time is it?");
         println!("\t2: Look at one goat.");
         println!("\t3: Log all goats!");
-        println!("\t4: Be a quitter.");
+        println!("\t4: List sloths.");
+        println!("\t5: Add sloths.");
+        println!("\t6: Be a quitter.");
 
         let mut menu_choice = String::new();
         let read_result = io::stdin().read_line(&mut menu_choice);
@@ -97,9 +106,29 @@ fn main() {
             "1" => println!("\nIt is currently {:?}", Local::now()),
             "2" => goat_branch(&mut goat_map),
             "3" => log_all_goats(&goat_map),
-            "4" => break,
-            _ => println!("Invalid choice.  Pick a number 1-3."),
+            "4" => list_sloths(&sloths),
+            "5" => add_sloth(&mut sloths),
+            "6" => break,
+            _ => println!("Invalid choice.  Pick a number 1-6."),
         }
+    }
+}
+
+fn add_sloth(sloths: &mut Vec<String>) {
+    let sloth_name = get_string_from_stdin("Please name a sloth.".to_string());
+    println!("{sloth_name} is a great name for a sloth!");
+
+    sloths.push(sloth_name);
+}
+
+fn list_sloths(sloths: &Vec<String>) {
+    println!("\nLogging last 5 sloths!!\n");
+    let end_index = sloths.len();
+    // let start_index = (end_index - 5).max(0);
+    let start_index = end_index.saturating_sub(5);
+    let sloth_range = start_index..end_index;
+    for sloth in sloths[sloth_range].iter() {
+        println!("{sloth}");
     }
 }
 
@@ -137,11 +166,15 @@ fn goat_branch(goat_map: &mut HashMap<String, Goat>) {
 }
 
 fn get_goat_name() -> String {
+    get_string_from_stdin("Please name a goat.".to_string())
+}
+
+fn get_string_from_stdin(message: String) -> String {
     let mut trimmed_name = String::new();
 
     // Prevents "enter" from the input from making the output appearing on more than one line
     loop {
-        println!("\nPlease name a goat.");
+        println!("\n{message}");
         let mut input_text_butter = String::new();
         let read_result = io::stdin().read_line(&mut input_text_butter);
 
