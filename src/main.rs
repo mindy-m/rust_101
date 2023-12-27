@@ -207,11 +207,11 @@ fn get_is_grumpy() -> bool {
         let trimmed_grumpy =
             get_string_from_stdin("Is the goat grumpy?!?".to_string()).to_lowercase();
         match trimmed_grumpy.as_str() {
-            "y" | "yes" | "hell yeah" | "true" => {
+            "y" | "yes" | "hell yeah" | "true" | "yeah" | "ja" => {
                 is_grumpy = true;
                 break;
             }
-            "n" | "no" | "fuck nah" | "false" => {
+            "n" | "no" | "fuck nah" | "false" | "nein" | "No way, dude." => {
                 is_grumpy = false;
                 break;
             }
